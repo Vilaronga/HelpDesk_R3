@@ -18,6 +18,10 @@ var connectionString = $"Host={host};Port={port};Database={database};Username={u
 
 // Add services to the container.
 
+// Adicionar o Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 //Adiciona o contexto da db
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -32,6 +36,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

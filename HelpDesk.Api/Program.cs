@@ -1,6 +1,7 @@
 using HelpDesk.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
+using HelpDesk.Api.Services;
 
 //Carregar o .env e
 DotEnv.Load();
@@ -21,6 +22,8 @@ var connectionString = $"Host={host};Port={port};Database={database};Username={u
 // Adicionar o Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 //Adiciona o contexto da db
 builder.Services.AddDbContext<AppDbContext>(options =>

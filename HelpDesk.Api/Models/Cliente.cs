@@ -32,15 +32,21 @@ namespace HelpDesk.Api.Models
         [Required]
         public string Empresa { get; set; } = string.Empty;
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column("dataCadastro", TypeName = "date")]
+        public DateTime DataCadastro { get; set; }
+
         public Cliente() { }
 
-        public Cliente(string nome, string email, string cpf, string telefone, string empresa)
+        public Cliente(string nome, string email, string cpf, string telefone, string empresa, DateTime dataCadastro)
         {
             Nome = nome;
             Email = email;
             Cpf = cpf;
             Telefone = telefone;
             Empresa = empresa;
+            DataCadastro = dataCadastro;
         }
     }
 }

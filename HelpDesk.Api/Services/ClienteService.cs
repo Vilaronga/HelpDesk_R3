@@ -121,5 +121,21 @@ namespace HelpDesk.Api.Services
                 Empresa = cliente.Empresa
             };
         }
+
+        public async Task<List<ClienteResponseDTO>> GetClientesByNomeAsync(string nome)
+        {
+            string termo = $"%{nome}%";
+
+            var clientes = await _appDbContext.Cliente.Where(c => EF.Functions.ILike(c.Nome, termo)).ToListAsync();
+
+            return clientes.Select(c => new ClienteResponseDTO
+            {
+                Nome = c.Nome,
+                Email = c.Email,
+                Cpf = c.Cpf,
+                Telefone = c.Telefone,
+                Empresa = c.Empresa
+            }).ToList();
+        }
     }
 }

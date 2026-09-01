@@ -42,6 +42,17 @@ namespace HelpDesk.Api.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet("/api/Cliente/nome/{nome}")]
+        public async Task<IActionResult> GetClientesByNome(string nome)
+        {
+            var cliente = await _clienteService.GetClientesByNomeAsync(nome);
+            if (cliente.Count == 0)
+            {
+                return NotFound("Nenhum usuário foi encontrado a partir do termo: " + nome);
+            }
+            return Ok(cliente);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllClientes()
         {

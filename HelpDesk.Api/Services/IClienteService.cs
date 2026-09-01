@@ -13,5 +13,7 @@ namespace HelpDesk.Api.Services
         Task<ClienteResponseDTO> GetClienteByEmailAsync(string email);
         Task<List<ClienteResponseDTO>> GetAllClientesAsync();
         Task<AddClienteDTO> AddClienteAsync(AddClienteDTO addClienteDTO);
+
+        Task<List<ClienteResponseDTO>> GetClientesByNomeAsync(string nome);
     }
 }

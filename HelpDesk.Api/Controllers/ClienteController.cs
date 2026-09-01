@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HelpDesk.Api.Data;
+using HelpDesk.Api.DTOs;
+using HelpDesk.Api.Models;
+using HelpDesk.Api.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HelpDesk.Api.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ClienteController : ControllerBase
+    {
+        private readonly AppDbContext _appDbContext;
+        private readonly IClienteService _clienteService;
+
+        public ClienteController(AppDbContext appDbContext, IClienteService clienteService)
+        {
+            _appDbContext = appDbContext;
+            _clienteService = clienteService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCliente([FromBody] AddClienteDTO addClienteDTO)
+        {
+            var cliente = await _clienteService.AddClienteAsync(addClienteDTO);
+            return Ok(cliente);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCliente(long id)
+        {
+            var cliente = await _clienteService.GetClienteByIdAsync(id);
+            if (cliente == null)
+            {
+                return NotFound("O cliente de ID: " + id + " não foi encontrado.");
+            }
+            return Ok(cliente);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllClientes()
+        {
+            var clientes = await _clienteService.GetAllClientesAsync();
+            return Ok(clientes);
+        }
+    }
+}

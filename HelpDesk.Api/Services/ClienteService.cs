@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelpDesk.Api.Data;
 using HelpDesk.Api.DTOs;
+using HelpDesk.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpDesk.Api.Services
@@ -30,15 +31,15 @@ namespace HelpDesk.Api.Services
             {
                 throw new Exception("O e-mail informado já está em uso.");
             }
-            
-            var cliente = new Models.Cliente
-            {
-                Nome = addClienteDTO.Nome,
-                Email = addClienteDTO.Email,
-                Cpf = addClienteDTO.Cpf,
-                Telefone = addClienteDTO.Telefone,
-                Empresa = addClienteDTO.Empresa
-            };
+
+            var cliente = new Cliente(
+                addClienteDTO.Nome,
+                addClienteDTO.Email,
+                addClienteDTO.Cpf,
+                addClienteDTO.Telefone,
+                addClienteDTO.Empresa,
+                DateTime.Now
+                );
 
             _appDbContext.Cliente.Add(cliente);
             await _appDbContext.SaveChangesAsync();

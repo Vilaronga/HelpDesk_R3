@@ -2,6 +2,7 @@ using HelpDesk.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using HelpDesk.Api.Services;
+using System.Reflection;
 
 //Carregar o .env e
 DotEnv.Load();
@@ -21,7 +22,12 @@ var connectionString = $"Host={host};Port={port};Database={database};Username={u
 
 // Adicionar o Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddScoped<IClienteService, ClienteService>();
 

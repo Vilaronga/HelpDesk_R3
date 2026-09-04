@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpDesk.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260904015620_Initial")]
+    [Migration("20260904020930_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -35,15 +35,15 @@ namespace HelpDesk.Api.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DataAbertura")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_abertura_chamado");
 
                     b.Property<DateTime>("DataAtualizacao")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_atualizacao_chamado");
 
                     b.Property<DateTime?>("DataEncerramento")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_encerramento_chamado");
 
                     b.Property<string>("Descricao")
@@ -100,7 +100,7 @@ namespace HelpDesk.Api.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdCliente"));
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_cliente");
 
                     b.Property<string>("Email")
@@ -150,11 +150,11 @@ namespace HelpDesk.Api.Migrations
                         .HasColumnName("cpf_colaborador");
 
                     b.Property<DateTime>("DataAtualizacao")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_atualizacao_colaborador");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_colaborador");
 
                     b.Property<string>("Email")
@@ -186,7 +186,7 @@ namespace HelpDesk.Api.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdEmpresa"));
 
                     b.Property<DateTime>("DataCadastroEmpresa")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_empresa");
 
                     b.Property<string>("NomeEmpresa")
@@ -209,7 +209,7 @@ namespace HelpDesk.Api.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdProduto"));
 
                     b.Property<DateTime>("DataCadastroProduto")
-                        .HasColumnType("timestamp")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_produto");
 
                     b.Property<string>("NomeProduto")

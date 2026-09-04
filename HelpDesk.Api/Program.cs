@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
-/// Injeta os serviços de empresa e cliente no contêiner de injeção de dependência, permitindo que eles sejam utilizados em controladores e outros serviços da aplicação.
+// Injeta os serviços de empresa e cliente no contêiner de injeção de dependência, permitindo que eles sejam utilizados em controladores e outros serviços da aplicação.
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 

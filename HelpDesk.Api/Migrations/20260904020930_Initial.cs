@@ -22,8 +22,8 @@ namespace HelpDesk.Api.Migrations
                     email_colaborador = table.Column<string>(type: "varchar(100)", nullable: false),
                     cpf_colaborador = table.Column<string>(type: "varchar(11)", nullable: false),
                     telefone_colaborador = table.Column<string>(type: "varchar(11)", nullable: true),
-                    data_cadastro_colaborador = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    data_atualizacao_colaborador = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    data_cadastro_colaborador = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    data_atualizacao_colaborador = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     colaborador_ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -38,7 +38,7 @@ namespace HelpDesk.Api.Migrations
                     id_empresa = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nome_empresa = table.Column<string>(type: "varchar(50)", nullable: false),
-                    data_cadastro_empresa = table.Column<DateTime>(type: "timestamp", nullable: false)
+                    data_cadastro_empresa = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace HelpDesk.Api.Migrations
                     id_produto = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nome_produto = table.Column<string>(type: "varchar(50)", nullable: false),
-                    data_cadastro_produto = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    data_cadastro_produto = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     produto_ativo = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -70,7 +70,7 @@ namespace HelpDesk.Api.Migrations
                     email_cliente = table.Column<string>(type: "varchar(100)", nullable: false),
                     telefone_cliente = table.Column<string>(type: "varchar(11)", nullable: true),
                     fk_id_empresa_cliente = table.Column<long>(type: "bigint", nullable: false),
-                    data_cadastro_cliente = table.Column<DateTime>(type: "timestamp", nullable: false)
+                    data_cadastro_cliente = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,9 +96,9 @@ namespace HelpDesk.Api.Migrations
                     titulo_chamado = table.Column<string>(type: "varchar(100)", nullable: false),
                     descricao_chamado = table.Column<string>(type: "text", nullable: false),
                     status_chamado = table.Column<string>(type: "varchar(10)", nullable: false),
-                    data_abertura_chamado = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    data_atualizacao_chamado = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    data_encerramento_chamado = table.Column<DateTime>(type: "timestamp", nullable: true)
+                    data_abertura_chamado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    data_atualizacao_chamado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    data_encerramento_chamado = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

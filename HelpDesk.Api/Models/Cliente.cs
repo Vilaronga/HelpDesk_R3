@@ -61,7 +61,7 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T00:00:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_cadastro_cliente", TypeName = "timestamp")]
+        [Column("data_cadastro_cliente", TypeName = "timestamp with time zone")]
         public DateTime DataCadastro { get; set; }
 
         /// <summary>

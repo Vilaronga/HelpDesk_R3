@@ -100,7 +100,7 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T17:00:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_abertura_chamado", TypeName = "timestamp")]
+        [Column("data_abertura_chamado", TypeName = "timestamp with time zone")]
         public DateTime DataAbertura { get; set; }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T17:30:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_atualizacao_chamado", TypeName = "timestamp")]
+        [Column("data_atualizacao_chamado", TypeName = "timestamp with time zone")]
         public DateTime DataAtualizacao { get; set; }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T18:00:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_encerramento_chamado", TypeName = "timestamp")]
+        [Column("data_encerramento_chamado", TypeName = "timestamp with time zone")]
         public DateTime? DataEncerramento { get; set; }
 
         /// <summary>

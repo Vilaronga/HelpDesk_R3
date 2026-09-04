@@ -121,8 +121,22 @@ namespace HelpDesk.Api.Models
         [Column("data_encerramento_chamado", TypeName = "timestamp")]
         public DateTime? DataEncerramento { get; set; }
 
+        /// <summary>
+        /// Inicializa uma nova instância da classe <see cref="Chamado"/>.
+        /// </summary>
         public Chamado() { }
-
+        
+        /// <summary>
+        /// Inicializa uma nova instância da classe <see cref="Chamado"/> com os parâmetros especificados.
+        /// </summary>
+        /// <param name="idCliente">ID do cliente ao qual o chamado pertence.</param>
+        /// <param name="idEmpresa">ID da empresa à qual o chamado pertence.</param>
+        /// <param name="idProduto">ID do produto ao qual o chamado pertence.</param>
+        /// <param name="idColaborador">ID do colaborador responsável pelo chamado.</param>
+        /// <param name="titulo">Título do chamado.</param>
+        /// <param name="descricao">Descrição do chamado.</param>
+        /// <param name="status">Status do chamado.</param>
+        /// <param name="dataAbertura">Data de abertura do chamado.</param>
         public Chamado(long idCliente, long idEmpresa, long idProduto, long idColaborador, string titulo, string descricao, StatusEnum status, DateTime dataAbertura)
         {
             IdCliente = idCliente;

@@ -32,6 +32,7 @@ builder.Services.AddSwaggerGen(options =>
 // Injeta os serviços de empresa e cliente no contêiner de injeção de dependência, permitindo que eles sejam utilizados em controladores e outros serviços da aplicação.
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
 //Adiciona o contexto da db
 builder.Services.AddDbContext<AppDbContext>(options =>

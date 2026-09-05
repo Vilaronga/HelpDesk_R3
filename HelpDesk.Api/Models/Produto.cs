@@ -37,6 +37,14 @@ namespace HelpDesk.Api.Models
         public DateTime DataCadastroProduto { get; set; }
 
         /// <summary>
+        /// Obtém ou define a data de atualização do produto.
+        /// </summary>
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [Column("data_atualizacao_produto", TypeName = "timestamp with time zone")]
+        public DateTime DataAtualizacaoProduto { get; set; }
+
+        /// <summary>
         /// Obtém ou define o status do produto (ativo ou inativo).
         /// </summary>
         /// <example>true</example>
@@ -57,6 +65,7 @@ namespace HelpDesk.Api.Models
         {
             NomeProduto = nomeProduto;
             DataCadastroProduto = dataCadastroProduto;
+            DataAtualizacaoProduto = dataCadastroProduto;
             ProdutoAtivo = true;
         }
     }

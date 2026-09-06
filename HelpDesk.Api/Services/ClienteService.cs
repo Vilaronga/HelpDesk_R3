@@ -14,7 +14,7 @@ namespace HelpDesk.Api.Services
     /// </summary>
     public class ClienteService : IClienteService
     {
-        private AppDbContext _appDbContext;
+        private readonly  AppDbContext _appDbContext;
 
         /// <summary>
         /// Inicializa uma nova instância do serviço de cliente com o contexto do banco de dados.
@@ -34,14 +34,6 @@ namespace HelpDesk.Api.Services
         /// <example>await clienteService.AddClienteAsync(new AddClienteDTO { Nome = "João da Silva", Email = "joao.silva@example.com", Cpf = "123.456.789-00", Telefone = "(11) 99999-9999", Empresa = "Acme Inc." });</example>
         public async Task<AddClienteDTO> AddClienteAsync(AddClienteDTO addClienteDTO)
         {
-            /*
-            var cpfExists = await _appDbContext.Cliente.AnyAsync(c => c.Cpf == addClienteDTO.Cpf);
-            if (cpfExists)
-            {
-                throw new Exception("O CPF informado já está em uso.");
-            }
-            */
-
             var emailExists = await _appDbContext.Cliente.AnyAsync(c => c.Email == addClienteDTO.Email);
             if (emailExists)
             {
@@ -51,10 +43,7 @@ namespace HelpDesk.Api.Services
             var cliente = new Cliente(
                 addClienteDTO.Nome,
                 addClienteDTO.Email,
-                //addClienteDTO.Cpf,
-                addClienteDTO.Telefone,
-                (long)addClienteDTO.IdEmpresa,
-                DateTime.UtcNow
+                (long)addClienteDTO.IdEmpresa
                 );
 
             _appDbContext.Cliente.Add(cliente);
@@ -82,8 +71,6 @@ namespace HelpDesk.Api.Services
                 Id = cliente.IdCliente,
                 Nome = cliente.Nome,
                 Email = cliente.Email,
-                //Cpf = cliente.Cpf,
-                Telefone = cliente.Telefone,
                 Empresa = cliente.Empresa
             };
         }
@@ -101,35 +88,11 @@ namespace HelpDesk.Api.Services
                     Id = cliente.IdCliente,
                     Nome = cliente.Nome,
                     Email = cliente.Email,
-                    //Cpf = cliente.Cpf,
-                    Telefone = cliente.Telefone,
                     Empresa = cliente.Empresa
                 })
                 .ToListAsync();
             return clientes;
         }
-
-        /*
-        public async Task<ClienteResponseDTO> GetClienteByCpfAsync(string cpf)
-        {
-            var cliente = await _appDbContext.Cliente.FirstOrDefaultAsync(c => c.Cpf == cpf);
-
-            if (cliente == null)
-            {
-                return null;
-            }
-
-            return new ClienteResponseDTO
-            {
-                Id = cliente.Id,
-                Nome = cliente.Nome,
-                Email = cliente.Email,
-                Cpf = cliente.Cpf,
-                Telefone = cliente.Telefone,
-                Empresa = cliente.Empresa
-            };
-        }
-        */
 
         /// <summary>
         /// Obtém um cliente pelo seu e-mail.
@@ -151,8 +114,6 @@ namespace HelpDesk.Api.Services
                 Id = cliente.IdCliente,
                 Nome = cliente.Nome,
                 Email = cliente.Email,
-                //Cpf = cliente.Cpf,
-                Telefone = cliente.Telefone,
                 Empresa = cliente.Empresa
             };
         }
@@ -173,8 +134,6 @@ namespace HelpDesk.Api.Services
             {
                 Nome = c.Nome,
                 Email = c.Email,
-                //Cpf = c.Cpf,
-                Telefone = c.Telefone,
                 Empresa = c.Empresa
             }).ToList();
         }

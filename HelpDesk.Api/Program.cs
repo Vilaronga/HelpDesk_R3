@@ -20,7 +20,7 @@ var connectionString = $"Host={host};Port={port};Database={database};Username={u
 
 // Add services to the container.
 
-// Adicionar o Swagger
+// Adiciona o Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -33,6 +33,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IChamadoService, ChamadoService>();
+builder.Services.AddScoped<ISlaCategoriaService, SlaCategoriaService>();
 
 //Adiciona o contexto da db
 builder.Services.AddDbContext<AppDbContext>(options =>

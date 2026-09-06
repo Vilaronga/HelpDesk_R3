@@ -13,7 +13,7 @@ namespace HelpDesk.Api.Services
     /// </summary>
     public class ProdutoService : IProdutoService
     {
-        AppDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
 
         /// <summary>
         /// Inicializa uma nova instância do serviço de produtos com o contexto do banco de dados.
@@ -38,7 +38,7 @@ namespace HelpDesk.Api.Services
                 throw new ArgumentNullException(nameof(produto), "O produto não pode ser nulo.");
             }
 
-            var novoProduto = new Models.Produto(produto.NomeProduto, DateTime.Now);
+            var novoProduto = new Models.Produto(produto.NomeProduto, DateTime.UtcNow);
             _appDbContext.Produto.Add(novoProduto);
             await _appDbContext.SaveChangesAsync();
 
@@ -100,7 +100,7 @@ namespace HelpDesk.Api.Services
             string termoBusca = $"%{termo}%";
 
             var produtos = await _appDbContext.Produto
-                .Where(p => EF.Functions.Like(p.NomeProduto, termoBusca))
+                .Where(p => EF.Functions.ILike(p.NomeProduto, termoBusca))
                 .ToListAsync();
 
             if (produtos == null || produtos.Count == 0)
@@ -149,7 +149,7 @@ namespace HelpDesk.Api.Services
             }
 
             produto.NomeProduto = nomeProduto;
-            produto.DataAtualizacaoProduto = DateTime.Now;
+            produto.DataAtualizacaoProduto = DateTime.UtcNow;
 
             _appDbContext.Produto.Update(produto);
             await _appDbContext.SaveChangesAsync();

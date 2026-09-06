@@ -27,54 +27,78 @@ namespace HelpDesk.Api.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id_chamado");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("categoria");
+
+                    b.Property<Guid>("CodigoPublico")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("codigo_publico")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
                     b.Property<DateTime>("DataAbertura")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("data_abertura_chamado");
+                        .HasColumnName("criado_em");
 
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("data_atualizacao_chamado");
+                        .HasColumnName("atualizado_em");
 
                     b.Property<DateTime?>("DataEncerramento")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("data_encerramento_chamado");
+                        .HasColumnName("fechado_em");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("descricao_chamado");
+                        .HasColumnName("descricao");
 
-                    b.Property<long>("IdCliente")
+                    b.Property<long?>("IdCliente")
                         .HasColumnType("bigint")
-                        .HasColumnName("fk_id_autor_chamado");
+                        .HasColumnName("cliente_id");
 
-                    b.Property<long>("IdColaborador")
+                    b.Property<long?>("IdColaborador")
                         .HasColumnType("bigint")
-                        .HasColumnName("fk_id_colaborador_chamado");
+                        .HasColumnName("colaborador_id");
 
                     b.Property<long>("IdEmpresa")
                         .HasColumnType("bigint")
-                        .HasColumnName("fk_id_empresa_chamado");
+                        .HasColumnName("grupo_empresa_id");
 
                     b.Property<long>("IdProduto")
                         .HasColumnType("bigint")
-                        .HasColumnName("fk_id_produto_chamado");
+                        .HasColumnName("produto_id");
+
+                    b.Property<string>("Prioridade")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("prioridade");
+
+                    b.Property<DateTime?>("SlaPrazo")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("sla_prazo");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("status_chamado");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("titulo_chamado");
+                        .HasColumnName("titulo");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CodigoPublico")
+                        .IsUnique();
 
                     b.HasIndex("IdCliente");
 
@@ -92,31 +116,28 @@ namespace HelpDesk.Api.Migrations
                     b.Property<long>("IdCliente")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id_cliente");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdCliente"));
 
                     b.Property<DateTime>("DataCadastro")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_cliente");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("email_cliente");
+                        .HasColumnName("email");
 
                     b.Property<long>("IdEmpresa")
                         .HasColumnType("bigint")
-                        .HasColumnName("fk_id_empresa_cliente");
+                        .HasColumnName("grupo_empresa_id");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("nome_cliente");
-
-                    b.Property<string>("Telefone")
-                        .HasColumnType("varchar(11)")
-                        .HasColumnName("telefone_cliente");
+                        .HasColumnName("nome");
 
                     b.HasKey("IdCliente");
 
@@ -133,7 +154,7 @@ namespace HelpDesk.Api.Migrations
                     b.Property<long>("IdColaborador")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id_colaborador");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdColaborador"));
 
@@ -144,7 +165,7 @@ namespace HelpDesk.Api.Migrations
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnType("varchar(11)")
-                        .HasColumnName("cpf_colaborador");
+                        .HasColumnName("cpf");
 
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("timestamp with time zone")
@@ -157,16 +178,16 @@ namespace HelpDesk.Api.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("email_colaborador");
+                        .HasColumnName("email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("nome_colaborador");
+                        .HasColumnName("nome");
 
                     b.Property<string>("Telefone")
                         .HasColumnType("varchar(11)")
-                        .HasColumnName("telefone_colaborador");
+                        .HasColumnName("telefone");
 
                     b.HasKey("IdColaborador");
 
@@ -178,18 +199,19 @@ namespace HelpDesk.Api.Migrations
                     b.Property<long>("IdEmpresa")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id_empresa");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdEmpresa"));
 
                     b.Property<DateTime>("DataCadastroEmpresa")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("data_cadastro_empresa");
 
                     b.Property<string>("NomeEmpresa")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
-                        .HasColumnName("nome_empresa");
+                        .HasColumnName("nome");
 
                     b.HasKey("IdEmpresa");
 
@@ -201,9 +223,13 @@ namespace HelpDesk.Api.Migrations
                     b.Property<long>("IdProduto")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("id_produto");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IdProduto"));
+
+                    b.Property<DateTime>("DataAtualizacaoProduto")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_atualizacao_produto");
 
                     b.Property<DateTime>("DataCadastroProduto")
                         .HasColumnType("timestamp with time zone")
@@ -212,30 +238,65 @@ namespace HelpDesk.Api.Migrations
                     b.Property<string>("NomeProduto")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
-                        .HasColumnName("nome_produto");
+                        .HasColumnName("nome");
 
                     b.Property<bool>("ProdutoAtivo")
                         .HasColumnType("boolean")
-                        .HasColumnName("produto_ativo");
+                        .HasColumnName("ativo");
 
                     b.HasKey("IdProduto");
 
                     b.ToTable("produto");
                 });
 
+            modelBuilder.Entity("HelpDesk.Api.Models.SlaCategoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("categoria");
+
+                    b.Property<long>("IdProduto")
+                        .HasColumnType("bigint")
+                        .HasColumnName("produto_id");
+
+                    b.Property<string>("Prioridade")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("prioridade");
+
+                    b.Property<TimeSpan>("TempoResolucao")
+                        .HasColumnType("interval")
+                        .HasColumnName("tempo_resolucao");
+
+                    b.Property<TimeSpan>("TempoResposta")
+                        .HasColumnType("interval")
+                        .HasColumnName("tempo_resposta");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProduto", "Categoria", "Prioridade")
+                        .IsUnique();
+
+                    b.ToTable("sla_categorias");
+                });
+
             modelBuilder.Entity("HelpDesk.Api.Models.Chamado", b =>
                 {
                     b.HasOne("HelpDesk.Api.Models.Cliente", "Autor")
                         .WithMany()
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdCliente");
 
                     b.HasOne("HelpDesk.Api.Models.Colaborador", "ColaboradorResponsavel")
                         .WithMany()
-                        .HasForeignKey("IdColaborador")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdColaborador");
 
                     b.HasOne("HelpDesk.Api.Models.Empresa", "Empresa")
                         .WithMany()
@@ -267,6 +328,17 @@ namespace HelpDesk.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("HelpDesk.Api.Models.SlaCategoria", b =>
+                {
+                    b.HasOne("HelpDesk.Api.Models.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("IdProduto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
                 });
 #pragma warning restore 612, 618
         }

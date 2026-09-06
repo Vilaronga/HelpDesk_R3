@@ -26,14 +26,8 @@ namespace HelpDesk.Api.DTOs
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
-        /// Obtém ou define o telefone do cliente.
-        /// </summary>
-        /// <example>11999999999</example>
-        public string Telefone { get; set; } = string.Empty;
-
-        /// <summary>
         /// Obtém ou define os dados detalhados da empresa associada ao cliente.
         /// </summary>
-        public Empresa Empresa { get; set; } // Removido o <example> incorreto para evitar quebra no Swagger JSON
+        public Empresa Empresa { get; set; }
     }
 }

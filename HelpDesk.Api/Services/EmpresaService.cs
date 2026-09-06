@@ -14,7 +14,7 @@ namespace HelpDesk.Api.Services
     /// </summary>
     public class EmpresaService : IEmpresaService
     {
-        AppDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
 
         /// <summary>
         /// Inicializa uma nova instância do serviço de empresa com o contexto do banco de dados.
@@ -84,7 +84,7 @@ namespace HelpDesk.Api.Services
         {   
             string termo = $"%{nome}%";
 
-            var empresas = await _appDbContext.Empresa.Where(e => EF.Functions.Like(e.NomeEmpresa, termo)).ToListAsync();
+            var empresas = await _appDbContext.Empresa.Where(e => EF.Functions.ILike(e.NomeEmpresa, termo)).ToListAsync();
 
             if (empresas == null)
             {

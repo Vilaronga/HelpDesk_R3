@@ -35,6 +35,7 @@ namespace HelpDesk.Api.Controllers
         /// </summary>
         /// <param name="produto">Os dados do produto a ser adicionado.</param>
         /// <returns>Os dados do produto adicionado.</returns>
+        [HttpPost]
         public async Task<IActionResult> AddProduto(ProdutoRequestDTO produto)
         {
             var novoProduto = await _produtoService.AddProdutoAsync(produto);
@@ -46,6 +47,7 @@ namespace HelpDesk.Api.Controllers
         /// </summary>
         /// <param name="nome">O nome do produto a ser obtido.</param>
         /// <returns>Os dados do produto obtido.</returns>
+        [HttpGet("nome/{nome}")]
         public async Task<IActionResult> GetProdutoByNome(string nome)
         {
             var produto = await _produtoService.GetProdutoByNomeAsync(nome);
@@ -61,6 +63,7 @@ namespace HelpDesk.Api.Controllers
         /// </summary>
         /// <param name="id">O ID do produto a ser obtido.</param>
         /// <returns>Os dados do produto obtido.</returns>
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetProdutoById(long id)
         {
             var produto = await _produtoService.GetProdutoByIdAsync(id);
@@ -76,6 +79,7 @@ namespace HelpDesk.Api.Controllers
         /// </summary>
         /// <param name="termo">O termo de busca.</param>
         /// <returns>Uma lista de produtos que correspondem ao termo de busca.</returns>
+        [HttpGet("buscar/termo/{termo}")]
         public async Task<IActionResult> GetProdutoByTermo(string termo)
         {
             var produtos = await _produtoService.GetProdutoByTermoAsync(termo);
@@ -90,6 +94,7 @@ namespace HelpDesk.Api.Controllers
         /// Obtém todos os produtos cadastrados no sistema de Help Desk.
         /// </summary>
         /// <returns>Uma lista de todos os produtos cadastrados.</returns>
+        [HttpGet]
         public async Task<IActionResult> GetAllProdutos()
         {
             var produtos = await _produtoService.GetAllProdutosAsync();
@@ -104,6 +109,7 @@ namespace HelpDesk.Api.Controllers
         /// Obtém todos os produtos com status falso.
         /// </summary>
         /// <returns>Uma lista de produtos com status falso.</returns>
+        [HttpGet("inativos")]
         public async Task<IActionResult> GetAllProdutosByStatusFalse()
         {
             var produtos = await _produtoService.GetAllProdutosByStatusFalseAsync();
@@ -120,6 +126,7 @@ namespace HelpDesk.Api.Controllers
         /// <param name="id">O ID do produto a ser atualizado.</param>
         /// <param name="nomeProduto">O novo nome do produto.</param>
         /// <returns>O produto atualizado.</returns>
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduto(long id, string nomeProduto)
         {
             var produtoAtualizado = await _produtoService.UpdateProdutoAsync(id, nomeProduto);

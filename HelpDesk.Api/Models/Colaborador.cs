@@ -16,14 +16,14 @@ namespace HelpDesk.Api.Models
         /// <example>1</example>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id_colaborador")]
+        [Column("id")]
         public long IdColaborador { get; set; }
 
         /// <summary>
         /// Obtém ou define o nome do colaborador.
         /// </summary>
         /// <example>Maria Oliveira</example>
-        [Column("nome_colaborador", TypeName = "varchar(100)")]
+        [Column("nome", TypeName = "varchar(100)")]
         [Required]
         public string Nome { get; set; } = string.Empty;
 
@@ -31,7 +31,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o email do colaborador.
         /// </summary>
         /// <example>maria.oliveira@exemplo.com</example>
-        [Column("email_colaborador", TypeName = "varchar(100)")]
+        [Column("email", TypeName = "varchar(100)")]
         [Required]
         public string Email { get; set; } = string.Empty;
 
@@ -39,7 +39,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o CPF do colaborador.
         /// </summary>
         /// <example>12345678900</example>
-        [Column("cpf_colaborador", TypeName = "varchar(11)")]
+        [Column("cpf", TypeName = "varchar(11)")]
         [Required]
         public string Cpf { get; set; } = string.Empty;
 
@@ -47,7 +47,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o telefone do colaborador.
         /// </summary>
         /// <example>11999999999</example>
-        [Column("telefone_colaborador", TypeName = "varchar(11)")]
+        [Column("telefone", TypeName = "varchar(11)")]
         public string Telefone { get; set; } = string.Empty;
 
         /// <summary>

@@ -16,14 +16,14 @@ namespace HelpDesk.Api.Models
         /// <example>1</example>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id_produto")]
+        [Column("id")]
         public long IdProduto { get; set; }
 
         /// <summary>
         /// Obtém ou define o nome do produto.
         /// </summary>
         /// <example>Sistema X</example>
-        [Column("nome_produto", TypeName = "varchar(50)")]
+        [Column("nome", TypeName = "varchar(50)")]
         [Required]
         public string NomeProduto { get; set; } = string.Empty;
 
@@ -48,7 +48,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o status do produto (ativo ou inativo).
         /// </summary>
         /// <example>true</example>
-        [Column("produto_ativo")]
+        [Column("ativo")]
         public bool ProdutoAtivo { get; set;}
 
         /// <summary>

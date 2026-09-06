@@ -16,14 +16,14 @@ namespace HelpDesk.Api.Models
         /// <example>1</example>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id_empresa")]
+        [Column("id")]
         public long IdEmpresa { get; set; }
 
         /// <summary>
         /// Obtém ou define o nome da empresa.
         /// </summary>
         /// <example>Acme Inc.</example>
-        [Column("nome_empresa", TypeName = "varchar(50)")]
+        [Column("nome", TypeName = "varchar(50)")]
         [Required]
         public string NomeEmpresa { get; set; } = string.Empty;
 
@@ -34,7 +34,7 @@ namespace HelpDesk.Api.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         [Column("data_cadastro_empresa", TypeName = "timestamp with time zone")]
-        public DateTime DataCadastroEmpresa { get; set; }
+        public DateTime DataCadastroEmpresa { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Inicializa uma nova instância da classe Empresa.

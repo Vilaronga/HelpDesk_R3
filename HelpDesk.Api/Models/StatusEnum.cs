@@ -8,17 +8,26 @@ namespace HelpDesk.Api.Models
         /// <summary>
         /// Indica que o chamado está aberto e aguardando atendimento.
         /// </summary>
-        /// <example>1</example>
         Aberto = 1,
+        
         /// <summary>
-        /// Indica que o chamado está em andamento e sendo tratado.
+        /// Indica que o chamado está em andamento, sendo tratado por um colaborador.
         /// </summary>
-        /// <example>2</example>
-        Pendente = 2,
+        EmAndamento = 2,
+        
         /// <summary>
-        /// Indica que o chamado foi finalizado e concluído.
+        /// Indica que o chamado está aguardando uma resposta ou ação do cliente.
         /// </summary>
-        /// <example>3</example>
-        Finalizado = 3
+        AguardandoCliente = 3,
+
+        /// <summary>
+        /// Indica que o chamado foi resolvido e não requer mais ações.
+        /// </summary>
+        Resolvido = 4,
+
+        /// <summary>
+        /// Indica que o chamado foi fechado e não pode mais ser reaberto.
+        /// </summary>
+        Fechado = 5
     }
 }

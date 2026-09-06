@@ -16,14 +16,14 @@ namespace HelpDesk.Api.Models
         /// <example>1</example>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id_cliente")]
+        [Column("id")]
         public long IdCliente { get; set; }
 
         /// <summary>
         /// Obtém ou define o nome do cliente.
         /// </summary>
         /// <example>João da Silva</example>
-        [Column("nome_cliente", TypeName = "varchar(100)")]
+        [Column("nome", TypeName = "varchar(100)")]
         [Required]
         public string Nome { get; set; } = string.Empty;
 
@@ -31,22 +31,15 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o email do cliente.
         /// </summary>
         /// <example>joao.silva@exemplo.com</example>
-        [Column("email_cliente", TypeName = "varchar(100)")]
+        [Column("email", TypeName = "varchar(100)")]
         [Required]
         public string Email { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Obtém ou define o telefone do cliente.
-        /// </summary>
-        /// <example>11999999999</example>
-        [Column("telefone_cliente", TypeName = "varchar(11)")]
-        public string Telefone { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtém ou define o identificador numérico da empresa associada (Chave Estrangeira).
         /// </summary>
         /// <example>1</example>
-        [Column("fk_id_empresa_cliente")]
+        [Column("grupo_empresa_id")]
         public long IdEmpresa { get; set; }
 
         /// <summary>
@@ -62,7 +55,7 @@ namespace HelpDesk.Api.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         [Column("data_cadastro_cliente", TypeName = "timestamp with time zone")]
-        public DateTime DataCadastro { get; set; }
+        public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Inicializa uma nova instância da classe Cliente.
@@ -75,16 +68,12 @@ namespace HelpDesk.Api.Models
         /// </summary>
         /// <param name="nome">Nome do cliente</param>
         /// <param name="email">Email do cliente</param>
-        /// <param name="telefone">Telefone do cliente</param>
         /// <param name="idEmpresa">Identificador único da empresa associada</param>
-        /// <param name="dataCadastro">Data de cadastro do cliente</param>
-        public Cliente(string nome, string email, string telefone, long idEmpresa, DateTime dataCadastro)
+        public Cliente(string nome, string email, long idEmpresa)
         {
             Nome = nome;
             Email = email;
-            Telefone = telefone;
             IdEmpresa = idEmpresa;
-            DataCadastro = dataCadastro;
         }
     }
 }

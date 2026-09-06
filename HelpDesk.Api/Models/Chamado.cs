@@ -16,15 +16,21 @@ namespace HelpDesk.Api.Models
         /// <example>1</example>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id_chamado")]
+        [Column("id")]
         public long Id { get; set; }
+
+        /// <summary>
+        /// Obtém ou define o código público do chamado, que é um identificador único para acesso externo.
+        /// </summary>
+        [Column("codigo_publico", TypeName = "uuid")]
+        public Guid CodigoPublico { get; set; }
 
         /// <summary>
         /// Obtém ou define o ID do cliente autor do chamado.
         /// </summary>
         /// <example>1</example>
-        [Column("fk_id_autor_chamado")]
-        public long IdCliente { get; set; }
+        [Column("cliente_id")]
+        public long? IdCliente { get; set; }
 
         /// <summary>
         /// Propriedade de navegação para o cliente que abriu o chamado.
@@ -36,7 +42,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o ID da empresa associada.
         /// </summary>
         /// <example>1</example>
-        [Column("fk_id_empresa_chamado")]
+        [Column("grupo_empresa_id")]
         public long IdEmpresa { get; set; }
 
         /// <summary>
@@ -49,7 +55,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o ID do produto associado.
         /// </summary>
         /// <example>1</example>
-        [Column("fk_id_produto_chamado")]
+        [Column("produto_id")]
         public long IdProduto { get; set; }
 
         /// <summary>
@@ -62,20 +68,22 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o ID do colaborador responsável.
         /// </summary>
         /// <example>2</example>
-        [Column("fk_id_colaborador_chamado")]
-        public long IdColaborador { get; set; }
+        [Column("colaborador_id")]
+        // TODO: Remover esse nullable depois que implementar a atribuição automática de colaborador responsável
+        public long? IdColaborador { get; set; }
 
         /// <summary>
         /// Propriedade de navegação para o colaborador responsável.
         /// </summary>
         [ForeignKey("IdColaborador")]
-        public Colaborador ColaboradorResponsavel { get; set; }
+        // TODO: Remover esse nullable depois que implementar a atribuição automática de colaborador responsável
+        public Colaborador? ColaboradorResponsavel { get; set; }
 
         /// <summary>
         /// Obtém ou define o título do chamado.
         /// </summary>
         /// <example>Problema com o sistema</example>
-        [Column("titulo_chamado", TypeName = "varchar(100)")]
+        [Column("titulo", TypeName = "varchar(100)")]
         [Required]
         public string Titulo { get; set; } = string.Empty;
 
@@ -83,7 +91,7 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define a descrição do chamado.
         /// </summary>
         /// <example>O sistema está apresentando erros ao tentar realizar determinada ação.</example>
-        [Column("descricao_chamado", TypeName = "text")]
+        [Column("descricao", TypeName = "text")]
         [Required]
         public string Descricao { get; set; } = string.Empty;
 
@@ -91,8 +99,22 @@ namespace HelpDesk.Api.Models
         /// Obtém ou define o status do chamado.
         /// </summary>
         /// <example>0</example> 
-        [Column("status_chamado", TypeName = "varchar(10)")]
+        [Column("status", TypeName = "varchar(20)")]
         public StatusEnum Status { get; set; }
+
+        /// <summary>
+        /// Obtém ou define a prioridade do chamado.
+        /// </summary>
+        /// <example>3</example>
+        [Column("prioridade", TypeName = "varchar(10)")]
+        public PrioridadeEnum Prioridade { get; set; }
+
+        /// <summary>
+        /// Obtém ou define a categoria do chamado.
+        /// </summary>
+        /// <example>1</example>
+        [Column("categoria", TypeName = "varchar(20)")]
+        public CategoriaEnum Categoria { get; set; }
 
         /// <summary>
         /// Obtém ou define a data de abertura do chamado.
@@ -100,8 +122,8 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T17:00:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_abertura_chamado", TypeName = "timestamp with time zone")]
-        public DateTime DataAbertura { get; set; }
+        [Column("criado_em", TypeName = "timestamp with time zone")]
+        public DateTime DataAbertura { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Obtém ou define a data de atualização do chamado.
@@ -109,8 +131,8 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T17:30:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_atualizacao_chamado", TypeName = "timestamp with time zone")]
-        public DateTime DataAtualizacao { get; set; }
+        [Column("atualizado_em", TypeName = "timestamp with time zone")]
+        public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Obtém ou define a data de encerramento do chamado.
@@ -118,8 +140,17 @@ namespace HelpDesk.Api.Models
         /// <example>2026-03-01T18:00:00Z</example>
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
-        [Column("data_encerramento_chamado", TypeName = "timestamp with time zone")]
+        [Column("fechado_em", TypeName = "timestamp with time zone")]
         public DateTime? DataEncerramento { get; set; }
+
+        /// <summary>
+        /// Obtém ou define a data e hora limite para atendimento do SLA.
+        /// </summary>
+        /// <example>2026-03-01T21:00:00Z</example>
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [Column("sla_prazo", TypeName = "timestamp with time zone")]
+        public DateTime? SlaPrazo { get; set; }
 
         /// <summary>
         /// Inicializa uma nova instância da classe <see cref="Chamado"/>.
@@ -136,8 +167,7 @@ namespace HelpDesk.Api.Models
         /// <param name="titulo">Título do chamado.</param>
         /// <param name="descricao">Descrição do chamado.</param>
         /// <param name="status">Status do chamado.</param>
-        /// <param name="dataAbertura">Data de abertura do chamado.</param>
-        public Chamado(long idCliente, long idEmpresa, long idProduto, long idColaborador, string titulo, string descricao, StatusEnum status, DateTime dataAbertura)
+        public Chamado(long idCliente, long idEmpresa, long idProduto, long idColaborador, string titulo, string descricao, StatusEnum status)
         {
             IdCliente = idCliente;
             IdEmpresa = idEmpresa;
@@ -146,8 +176,6 @@ namespace HelpDesk.Api.Models
             Titulo = titulo;
             Descricao = descricao;
             Status = status;
-            DataAbertura = dataAbertura;
-            DataAtualizacao = dataAbertura;
         }
     }
 }
